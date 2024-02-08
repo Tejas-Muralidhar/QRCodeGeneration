@@ -9,11 +9,11 @@ body{
 }
 
 h1{
-    text-align: center;
-    color: #fdfdfd;
+    text-align: center !important;
+    color: #fdfdfd !important;
 }
 
-form {
+#form {
     max-width: 500px;
     margin: 0 auto;
     padding: 20px;
@@ -42,7 +42,7 @@ input[type="date"] {
 }
 
 /* Apply styles to the submit button */
-button[type="submit"] {
+button[type="submit"]{
     width: 100%;
     padding: 10px;
     background-color: #007bff;
@@ -56,3 +56,4 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #0056b3;
 }
+

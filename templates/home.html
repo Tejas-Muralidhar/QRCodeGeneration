@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="/static/home.css" />
   </head>
   <body>
+    {% if qr_image == Null %}
     <h1>Vehicle Information</h1>
-    <form action="/store-vehicle/" method="post">
+    <form id="form" action="{% url 'store-vehicle' %}" method="post">
       {% csrf_token %}
       <label for="registration_number">Registration Number:</label>
       <input
@@ -126,14 +127,77 @@
         required
       /><br /><br />
 
+      <label for="location">Location of use:</label>
+      <input
+        type="text"
+        id="location"
+        name="location"
+        placeholder="eg. Jayanagar"
+        required
+      /><br /><br />
+
       <button type="submit">Submit</button>
     </form>
-    {% comment %} {% if message %}
+    {% else %}
     <div>
-      <p>{{message}}</p>
-      <h2>Here is your QR COde regarding the vehicle</h2>
-      <img src="" alt="" />
+      <h2 style="color: white; text-align: center">{{message}}</h2>
+      <h3 style="color: white; text-align: center">
+        Scan the below QR Code for the details of the vehicle
+        {{registration_number}}
+      </h3>
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 50vh;
+        "
+      >
+        <img
+          src="data:image/png;base64,{{ qr_image }}"
+          alt="QR Code"
+          width="300"
+          height="300"
+          style="margin-bottom: 10px"
+        />
+      </div>
+      <div style="text-align: center; margin: 10px">
+        <button
+          onclick="window.print();"
+          style="
+            width: auto;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+          "
+        >
+          Print
+        </button>
+        <a href="data:image/png;base64,{{ qr_image }}" download="VehicleQR.png"
+          ><button
+            style="
+              width: auto;
+              padding: 10px;
+              background-color: #007bff;
+              color: #fff;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+              transition: background-color 0.3s ease;
+            "
+          >
+            Download
+          </button></a
+        >
+      </div>
+      <form action="{% url 'home' %}" method="get">
+        <button type="submit">Go to Home</button>
+      </form>
     </div>
-    {% endif %} {% endcomment %}
+    {% endif %}
   </body>
 </html>
