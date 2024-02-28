@@ -2,9 +2,75 @@ from django.shortcuts import render, redirect
 import io
 import json
 import qrcode
-from django.http import JsonResponse
-from .models import VehicleDetails, VehicleQR
+from django.http import JsonResponse,HttpResponse
+from .models import VehicleDetails
 import base64
+from django.shortcuts import get_object_or_404
+from datetime import date
+from PIL import Image
+from io import BytesIO
+
+class CustomJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, date):
+            return obj.isoformat()
+        return super().default(obj)
+
+def get_vehicle_qr_image(request):
+    try:
+        # Retrieve the registration_number_id from the request
+        registration_number_id = request.GET.get('registration_number_id')
+    
+        # Retrieve the VehicleQR object based on the registration_number_id
+        vehicle_qr = get_object_or_404(VehicleDetails, registration_number=registration_number_id)
+
+        vehicle_data = {
+                'registration_number': vehicle_qr.registration_number,
+                'manufactured_by': vehicle_qr.manufactured_by,
+                'vehicle_model': vehicle_qr.vehicle_model,
+                'year_of_manufacture': vehicle_qr.year_of_manufacture,
+                'body_built_by': vehicle_qr.body_built_by,
+                'type_of_vehicle': vehicle_qr.type_of_vehicle,
+                'battery_size': vehicle_qr.battery_size,
+                'tyre_size': vehicle_qr.tyre_size,
+                'chassis_number': vehicle_qr.chassis_number,
+                'engine_number': vehicle_qr.engine_number,
+                'date_of_delivery': vehicle_qr.date_of_delivery,
+                'order_number': vehicle_qr.order_number,
+                'kgid_policy_number': vehicle_qr.kgid_policy_number,
+                'location': vehicle_qr.location
+        }
+
+        # Serialize the dictionary to JSON
+        vehicle_data_json = json.dumps(vehicle_data, cls=CustomJSONEncoder)
+        print(vehicle_data_json)
+        # Generate QR code
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(vehicle_data_json)
+        qr.make(fit=True)
+        qr_img = qr.make_image(fill_color="black", back_color="white")
+
+        with io.BytesIO() as output:
+            qr_img.save(output)
+            image_data = output.getvalue()
+
+        # Convert the image data to a base64 string
+        qr_image_base64 = base64.b64encode(image_data).decode()
+
+        data = {"qr_image": qr_image_base64}
+        return render(request, 'home.html', data)
+
+    except Exception as e:
+        return HttpResponse(e)
+
+
+
+
 
 def store_vehicle_details(request):
     if request.method == 'POST':
@@ -63,6 +129,7 @@ def store_vehicle_details(request):
 
             # Serialize the dictionary to JSON
             vehicle_data_json = json.dumps(vehicle_data)
+            
 
             # Generate QR code
             qr = qrcode.QRCode(
@@ -74,17 +141,6 @@ def store_vehicle_details(request):
             qr.add_data(vehicle_data_json)
             qr.make(fit=True)
             qr_img = qr.make_image(fill_color="black", back_color="white")
-
-            # Save QR code image as binary data
-            with io.BytesIO() as output:
-                qr_img.save(output)
-                qr_image_blob = output.getvalue()
-
-            # Create a VehicleQR object and save QR code blob
-            vehicle_qr = VehicleQR.objects.create(
-                registration_number=vehicle,
-                image_blob=qr_image_blob
-            )
 
             with io.BytesIO() as output:
                 qr_img.save(output)
@@ -109,5 +165,13 @@ def store_vehicle_details(request):
 
 
 def home(request):
-    return render(request, 'home.html')
-
+    if request.method == 'GET':
+        return render(request, 'home.html')
+    else:
+        return redirect('home.html')
+    
+def render_get_qr(request):
+    if request.method == 'GET':
+        return render(request, 'fetch.html')
+    else:
+        return redirect('home.html')

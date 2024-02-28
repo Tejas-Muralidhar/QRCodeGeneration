@@ -43,7 +43,7 @@ input[type="date"] {
 
 /* Apply styles to the submit button */
 button[type="submit"]{
-    width: 100%;
+    width: 29em;
     padding: 10px;
     background-color: #007bff;
     color: #fff;
@@ -51,6 +51,7 @@ button[type="submit"]{
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    position: relative;
 }
 
 button[type="submit"]:hover {

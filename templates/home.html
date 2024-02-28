@@ -5,10 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vehicle Details Form</title>
     <link rel="stylesheet" href="/static/home.css" />
+    <style>
+      #linktoget-qr {
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid black;
+        background-color: #1175e0;
+        width: max-content;
+        padding: 5px;
+      }
+      #linktoget-qr > a {
+        text-decoration: underline;
+        color: white;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
   </head>
   <body>
     {% if qr_image == Null %}
     <h1>Vehicle Information</h1>
+    <h2 id="linktoget-qr">
+      Already registered the vehicle here?
+      <a href="{% url 'fetch' %}"> Get my QR Code!</a>
+    </h2>
     <form id="form" action="{% url 'store-vehicle' %}" method="post">
       {% csrf_token %}
       <label for="registration_number">Registration Number:</label>
@@ -139,7 +165,14 @@
       <button type="submit">Submit</button>
     </form>
     {% else %}
-    <div>
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      "
+    >
       <h2 style="color: white; text-align: center">{{message}}</h2>
       <h3 style="color: white; text-align: center">
         Scan the below QR Code for the details of the vehicle
@@ -165,7 +198,7 @@
         <button
           onclick="window.print();"
           style="
-            width: auto;
+            width: 100px;
             padding: 10px;
             background-color: #007bff;
             color: #fff;
@@ -180,7 +213,7 @@
         <a href="data:image/png;base64,{{ qr_image }}" download="VehicleQR.png"
           ><button
             style="
-              width: auto;
+              width: 100px;
               padding: 10px;
               background-color: #007bff;
               color: #fff;
@@ -194,7 +227,8 @@
           </button></a
         >
       </div>
-      <form action="{% url 'home' %}" method="get">
+      <form action="{% url 'home' %}" method="GET">
+        {% csrf_token %}
         <button type="submit">Go to Home</button>
       </form>
     </div>

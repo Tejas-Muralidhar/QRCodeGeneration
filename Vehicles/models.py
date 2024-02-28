@@ -16,6 +16,3 @@ class VehicleDetails(models.Model):
     kgid_policy_number = models.CharField(max_length=30)
     location = models.CharField(max_length=45)
 
-class VehicleQR(models.Model):
-    registration_number = models.ForeignKey(VehicleDetails, on_delete=models.CASCADE, primary_key = True,)
-    image_blob = models.BinaryField()
