@@ -1,14 +1,14 @@
 /* Apply general styles to the form */
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@500&display=swap');
 
-body{
+body {
     box-sizing: border-box;
     padding: 0;
     background-color: #00308F;
     font-family: 'Source Code Pro', monospace;
 }
 
-h1{
+h1 {
     text-align: center !important;
     color: #fdfdfd !important;
 }
@@ -38,11 +38,12 @@ input[type="date"] {
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-sizing: border-box; /* Ensure padding and border are included in the width */
+    box-sizing: border-box;
+    /* Ensure padding and border are included in the width */
 }
 
 /* Apply styles to the submit button */
-button[type="submit"]{
+button[type="submit"] {
     width: 29em;
     padding: 10px;
     background-color: #007bff;
@@ -57,4 +58,3 @@ button[type="submit"]{
 button[type="submit"]:hover {
     background-color: #0056b3;
 }
-

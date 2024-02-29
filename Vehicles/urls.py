@@ -1,9 +1,8 @@
 from django.urls import path
-from .views import store_vehicle_details,home,get_vehicle_qr_image,render_get_qr
+from .views import store_vehicle_details,home,display_details
 
 urlpatterns = [
     path('',home, name='home'),
     path('store-vehicle/',store_vehicle_details,name='store-vehicle'),
-    path('get-qr/',get_vehicle_qr_image,name="get-qr"),
-    path('get-registered',render_get_qr,name="fetch")
+    path('display-details/',display_details,name="display_details"),
 ]

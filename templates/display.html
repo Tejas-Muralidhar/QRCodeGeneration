@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Details</title>
+    <style>
+        body{
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            background-color: #00308F;
+            box-sizing: border-box;
+            padding: 0;
+            background-color: #00308F;
+            font-family: 'Source Code Pro', monospace;
+        }
+        /* Apply general styles to the table */
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.1);
+        }
+        tr{
+            background-color:white;
+        }
+        /* Apply styles to table header cells */
+        th {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd; /* Add border bottom to header cells */
+        }
+
+        /* Apply styles to table data cells */
+        td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd; /* Add border bottom to data cells */
+        }
+
+        /* Apply alternate background color to even rows */
+        tr:nth-child(even) {
+            background-color: #f9f9f9; /* Light gray background color for even rows */
+        }
+        h1{
+            text-align: center !important;
+            color: #fdfdfd !important;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Vehicle Details</h1>
+    <table border="1">
+        <tr>
+            <th>Registration Number</th>
+            <td>{{ vehicle.registration_number }}</td>
+        </tr>
+        <tr>
+            <th>Manufactured By</th>
+            <td>{{ vehicle.manufactured_by }}</td>
+        </tr>
+        <tr>
+            <th>Vehicle Model</th>
+            <td>{{ vehicle.vehicle_model }}</td>
+        </tr>
+        <tr>
+            <th>Year of Manufacture</th>
+            <td>{{ vehicle.year_of_manufacture }}</td>
+        </tr>
+        <tr>
+            <th>Body Built By</th>
+            <td>{{ vehicle.body_built_by }}</td>
+        </tr>
+        <tr>
+            <th>Vehicle Type</th>
+            <td>{{ vehicle.type_of_vehicle }}</td>
+        </tr>
+        <tr>
+            <th>Battery Size</th>
+            <td>{{ vehicle.battery_size }}</td>
+        </tr>
+        <tr>
+            <th>Tyre Size</th>
+            <td>{{ vehicle.tyre_size }}</td>
+        </tr>
+        <tr>
+            <th>Chassis Number</th>
+            <td>{{ vehicle.chassis_number }}</td>
+        </tr>
+        <tr>
+            <th>Engine Number</th>
+            <td>{{ vehicle.engine_number }}</td>
+        </tr>
+        <tr>
+            <th>Date of Delivery</th>
+            <td>{{ vehicle.date_of_delivery }}</td>
+        </tr>
+        <tr>
+            <th>Order Number</th>
+            <td>{{ vehicle.order_number }}</td>
+        </tr>
+        <tr>
+            <th>KGID Policy Number</th>
+            <td>{{ vehicle.kgid_policy_number }}</td>
+        </tr>
+        <tr>
+            <th>Location</th>
+            <td>{{ vehicle.location }}</td>
+        </tr>
+    </table>
+</body>
+</html>

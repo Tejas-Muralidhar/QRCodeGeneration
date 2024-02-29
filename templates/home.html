@@ -31,10 +31,6 @@
   <body>
     {% if qr_image == Null %}
     <h1>Vehicle Information</h1>
-    <h2 id="linktoget-qr">
-      Already registered the vehicle here?
-      <a href="{% url 'fetch' %}"> Get my QR Code!</a>
-    </h2>
     <form id="form" action="{% url 'store-vehicle' %}" method="post">
       {% csrf_token %}
       <label for="registration_number">Registration Number:</label>
